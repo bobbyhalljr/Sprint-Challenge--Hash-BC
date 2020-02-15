@@ -23,11 +23,7 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
-    
-    # block_string = json.dumps(last_proof, sort_keys=True)
-
-    last_proof = hashlib.sha256(last_proof).hexdigest()
+    proof = 0 
     
     while valid_proof(last_proof, proof) is False:
         proof += 1
@@ -45,13 +41,11 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
 
-    # guess = f"{last_hash}{proof}".encode()
-    guess_hash = hashlib.sha256(last_hash).hexdigest()
+    last_proof = hashlib.sha256(str(last_hash).encode()).hexdigest()
+    guess_hash = hashlib.sha256(str(proof).encode()).hexdigest()
     
-    if guess_hash[:6] == last_hash[6:]:
-        return guess_hash == proof
-    # return guess_hash[:6] == random.random()
-
+    return guess_hash[:6] == last_proof[-6:]
+        
 
 if __name__ == '__main__':
     # What node are we interacting with?
